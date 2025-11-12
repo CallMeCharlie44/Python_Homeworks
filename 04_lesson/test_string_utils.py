@@ -4,6 +4,7 @@ from string_utils import StringUtils
 
 string_utils = StringUtils()
 
+# Ужк созданные тесты в фале. Не мои
 
 @pytest.mark.positive
 @pytest.mark.parametrize("input_str, expected", [
@@ -25,106 +26,69 @@ def test_capitalize_negative(input_str, expected):
     assert string_utils.capitalize(input_str) == expected
 
 
-    import pytest
-from string_utils import StringUtils
+#Тесты на 2-ю функцию. Удаление пробелов
 
-utils = StringUtils()
-
-
-# --- trim ---
-@pytest.mark.parametrize("input_str, expected", [
-    ("  hello  ", "hello"),  # пробелы по краям
-    ("noSpaces", "noSpaces"),  # без изменений
-    ("   ", ""),  # только пробелы
-    ("", ""),  # пустая строка
-    (None, None)  # негатив — None
+@pytest.mark.positive
+@pytest.mark.parametrize("input_str, expected", [ 
+    ("  Пробелы? ", "Пробелы?"),
+    ("Пробелы", "Пробелы"),
 ])
-def test_trim(input_str, expected):
-    assert utils.trim(input_str) == expected
+def test_trim_posotove(input_str, expected):
+    assert string_utils.trim(input_str) == expected
 
 
-# --- to_list ---
-@pytest.mark.parametrize("input_str, delimiter, expected", [
-    ("a,b,c", ",", ["a", "b", "c"]),
-    ("1:2:3", ":", ["1", "2", "3"]),
-    ("", ",", []),  # пустая строка
-    (None, ",", []),  # негатив - None
-    ("abc", None, ["abc"])  # нет разделителя → возвращаем всю строку списком?
+@pytest.mark.negative
+@pytest.mark.parametrize("input_str, expected", [ 
+    ("Пробелы    ", "Пробелы"),
+    (None, None),
 ])
-def test_to_list(input_str, delimiter, expected):
-    if delimiter is None:
-        # Функция упадёт без проверки, поэтому защищаем тест
-        with pytest.raises(TypeError):
-            utils.to_list(input_str, delimiter)
-    else:
-        assert utils.to_list(input_str, delimiter) == expected
+def test_trim_negative(input_str, expected):
+    assert string_utils.trim(input_str) == expected
 
 
-# --- contains ---
-@pytest.mark.parametrize("string, symbol, expected", [
-    ("Hello", "H", True),
-    ("Hello", "o", True),
-    ("Hello", "z", False),
-    ("", "H", False),  # пустая строка
-    ("Hello", "", False),  # пустой символ
-    (None, "a", False),  # негатив — None
+#Тесты на 3-ю функцию с искомым символом
+
+@pytest.mark.positive
+@pytest.mark.parametrize("input_str, symbol, expected", [
+    ("Привет", "П", True),
+    ("Чарльз Леклееер", "М", False ),
 ])
-def test_contains(string, symbol, expected):
-    assert utils.contains(string, symbol) == expected
+def test_symbol_positive(input_str, symbol, expected):
+    assert string_utils.contains(input_str, symbol) == expected
 
-
-# --- delete_symbol ---
-@pytest.mark.parametrize("string, symbol, expected", [
-    ("banana", "a", "bnn"),
-    ("banana", "x", "banana"),  # нет символа
-    ("", "a", ""),  # пустая строка
-    (None, "a", None),  # негатив
-    ("test", "", "test"),  # пустой символ → без изменений
+# Тест на функцию Raises
+@pytest.mark.positive
+@pytest.mark.parametrize("input_str, symbol, expected", [
+    ("Out of touch", "", ValueError),
 ])
-def test_delete_symbol(string, symbol, expected):
-    assert utils.delete_symbol(string, symbol) == expected
+def test_symbol_positive(input_str, symbol, expected):
+    with pytest.raises(ValueError):
+        string_utils.contains(input_str, symbol)
 
-
-# --- starts_with ---
-@pytest.mark.parametrize("string, symbol, expected", [
-    ("Python", "P", True),
-    ("Python", "x", False),
-    ("", "a", False),
-    ("Python", "", False),
-    (None, "P", False),
+@pytest.mark.negative
+@pytest.mark.parametrize("input_str, symbol, expected", [
+    (" ", "П", True),
+    ("Чарльз", "", False ),
 ])
-def test_starts_with(string, symbol, expected):
-    assert utils.starts_with(string, symbol) == expected
+def test_symbol_negative(input_str, symbol, expected):
+    assert string_utils.contains(input_str, symbol) == expected
 
 
-# --- end_with ---
-@pytest.mark.parametrize("string, symbol, expected", [
-    ("hello", "o", True),
-    ("hello", "x", False),
-    ("", "x", False),
-    ("hello", "", False),
-    (None, "o", False),
+# Тест на 4-ую функцию. Удаление символов
+
+@pytest.mark.positive
+@pytest.mark.parametrize("input_str, symbol, expected", [
+    ("Удалить_работу", "_", "Удалитьработу"),
+    ("ProMax", "Max", "Pro"),
 ])
-def test_end_with(string, symbol, expected):
-    assert utils.end_with(string, symbol) == expected
+def test_delite_symbol_positive(input_str, symbol, expected):
+    assert string_utils.delete_symbol(input_str, symbol) == expected
 
 
-# --- is_empty ---
-@pytest.mark.parametrize("string, expected", [
-    ("", True),
-    (None, True),
-    (" ", False),  # пробел = не пусто!
-    ("text", False),
+@pytest.mark.negative
+@pytest.mark.parametrize("input_str, symbol, expected", [
+    ("  ", "", ""),
+    ("Delete", "", "Delete"),
 ])
-def test_is_empty(string, expected):
-    assert utils.is_empty(string) == expected
-
-
-# --- list_to_string ---
-@pytest.mark.parametrize("lst, joiner, expected", [
-    (["a", "b", "c"], ",", "a,b,c"),
-    (["1", "2"], "-", "1-2"),
-    ([], ",", ""),  # пустой список
-])
-def test_list_to_string(lst, joiner, expected):
-    assert utils.list_to_string(lst, joiner) == expected
+def test_delite_symbol_negative(input_str, symbol, expected):
+    assert string_utils.delete_symbol(input_str, symbol) == expected   
