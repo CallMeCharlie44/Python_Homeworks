@@ -6,7 +6,6 @@ from selenium.webdriver.common.by import By
 
 driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
 
-driver.get("https://google.com")
 driver.get("http://uitestingplayground.com/dynamicid")
 
 sleep(3)
