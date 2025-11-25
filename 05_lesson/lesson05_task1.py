@@ -1,4 +1,3 @@
-from time import sleep
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
@@ -8,10 +7,6 @@ driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install())
 
 driver.get("http://uitestingplayground.com/classattr")
 
-sleep(3)
+blue_button_input = driver.find_element(By.CSS_SELECTOR, ".btn-primary" ).click
 
-blue_button_input = driver.find_element(By.CSS_SELECTOR, ".btn-primary" )
-blue_button_input.click()
-
-sleep(3)
 driver.quit()

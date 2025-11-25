@@ -1,11 +1,11 @@
 from time import sleep
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service as ChromeService
-from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.firefox.service import Service as FirefoxService
 from selenium.webdriver.common.by import By
+from webdriver_manager.firefox import GeckoDriverManager
 
-driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
-driver = webdriver.Firefox()
+driver = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()))
+
 driver.get("http://the-internet.herokuapp.com/login")
 
 username = "tomsmith"
@@ -25,8 +25,8 @@ buttom_login = driver.find_element(By.CSS_SELECTOR, ".fa" )
 buttom_login.click()
 
 sleep(2)
-hidden_message = driver.find_element(By.CSS_SELECTOR, "div.flash.success")
+hidden_message = driver.find_element(By.CSS_SELECTOR, "div.flash.success").text
 print(hidden_message)
 
 sleep(2)
-driver.quit
+driver.quit()
