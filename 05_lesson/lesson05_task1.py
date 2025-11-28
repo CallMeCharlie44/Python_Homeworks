@@ -7,6 +7,6 @@ driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install())
 
 driver.get("http://uitestingplayground.com/classattr")
 
-blue_button_input = driver.find_element(By.CSS_SELECTOR, ".btn-primary" ).click()
-
+blue_button_input = driver.find_element(By.CSS_SELECTOR, ".btn-primary" )
+blue_button_input.click()
 driver.quit()
