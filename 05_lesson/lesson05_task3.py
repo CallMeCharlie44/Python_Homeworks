@@ -1,12 +1,12 @@
 from time import sleep
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service as ChromeService
-from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.firefox.service import Service as FirefoxService
 from selenium.webdriver.common.by import By
+from webdriver_manager.firefox import GeckoDriverManager
 
-driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
+service = FirefoxService(executable_path=GeckoDriverManager().install)
+driver = webdriver.Firefox(service=service)
 
-driver.get("https://google.com")
 driver.get("http://the-internet.herokuapp.com/inputs")
 
 sleep(3)
@@ -20,4 +20,4 @@ sleep(2)
 search_input.clear()
 search_input.send_keys(text_2)
 sleep(2)
-driver.quit
+driver.quit()
