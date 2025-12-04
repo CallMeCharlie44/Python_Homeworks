@@ -3,7 +3,7 @@ from selenium.webdriver.edge.service import Service as EdgeService
 from selenium.webdriver.edge.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-
+from selenium.webdriver.support.ui import WebDriverWait
 
 options = Options()
 options.add_argument("--start-maximized")
@@ -26,6 +26,9 @@ def test_first_name():
     driver.find_element(By.NAME, 'job-position').send_keys('QA')
     driver.find_element(By.NAME, 'company').send_keys('SkyPro')
     driver.find_element(By.CSS_SELECTOR, "[type='submit']").click()
+
+    wait = WebDriverWait(driver, 26)
+
 
 
 zip_code_field = driver.find_element(By.ID, 'zip-code')

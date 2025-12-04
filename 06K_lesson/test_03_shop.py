@@ -2,7 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.firefox.service import Service as FirefoxService
 from webdriver_manager.firefox import GeckoDriverManager
 from selenium.webdriver.common.by import By
-
+from selenium.webdriver.support.ui import WebDriverWait
 
 def test_shop():
     driver = webdriver.Firefox(
@@ -31,6 +31,7 @@ def test_shop():
     element = driver.find_element(By.CSS_SELECTOR, "div.summary_total_label")
     total_price = element.text
 
-    print(f"Проверка успешна! Итоговая сумма равна {total_price}")
+    wait = WebDriverWait(driver, 26)
 
-driver.quit()
+    print(f"Проверка успешна! Итоговая сумма равна {total_price}")
+    driver.quit()
